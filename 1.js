@@ -10,17 +10,26 @@ function task1() {
    */
   function getData(data, timeout = 2000) {
     // Функція повертає новий проміс
+	return new Promise((res, rej) => {
+		setTimeout(() => res(data), timeout);
+		if (Object.entries(data).length === 0) {
+			rej(new Error(`Об'єкт пустий`))
+		}
+	})
     // За допомогою setTimeout ми симулюємо затримку timeout, яка виникає при роботі з асинхронними джерелами даних
     // Якщо об'єкт не пустий, ми викликаємо resolve з data
     // Якщо об'єкт пустий, ми викликаємо reject з новим об'єктом Error("Об'єкт пустий")
   }
 
   // Ми викликаємо getData з об'єктом { name: "John", age: 30, city: "New York" } і часом очікування 2000
-
+  getData({ name: "John", age: 30, city: "New York" }, 2000)
   // Ми обробляємо дані, повернуті промісом
   // У разі успіху виводимо в консоль дані
+  .then((data) => console.log(data))
   // У разі помилки виводимо повідомлення помилки
+  .catch((error) => console.error(error.message))
   // Незалежно від того, завершилось виконання проміса успіхом чи ні виводимо в консоль "Завдання 1 завершено"
+  .finally(() => console.log(`Завдання 1 завершено`))
 }
 
 // Викликаємо функцію task1
